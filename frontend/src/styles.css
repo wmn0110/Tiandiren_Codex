@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Serif+TC:wght@500;700;800&display=swap');
 
 :root {
-  --bg: #f5efe5;
-  --bg-soft: #fffaf3;
-  --surface: rgba(255, 255, 255, 0.9);
-  --surface-strong: #ffffff;
+  --bg: #ded3c2;
+  --bg-soft: #ede1cf;
+  --surface: rgba(248, 241, 231, 0.92);
+  --surface-strong: #f8f1e7;
   --text: #1f2933;
   --muted: #5f6b7a;
   --primary: #83512c;
   --primary-dark: #653b1c;
   --accent: #d89c62;
-  --border: rgba(112, 88, 58, 0.15);
-  --shadow: 0 18px 45px rgba(31, 41, 51, 0.1);
+  --border: rgba(112, 88, 58, 0.22);
+  --shadow: 0 18px 45px rgba(31, 41, 51, 0.16);
   --radius-lg: 28px;
   --radius-md: 20px;
   --max-width: 1160px;
@@ -29,9 +29,9 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    radial-gradient(circle at top right, rgba(216, 156, 98, 0.18), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(131, 81, 44, 0.12), transparent 28%),
-    linear-gradient(180deg, #fffdf8 0%, var(--bg) 100%);
+    radial-gradient(circle at top right, rgba(216, 156, 98, 0.14), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(88, 68, 47, 0.16), transparent 28%),
+    linear-gradient(180deg, #eee4d5 0%, var(--bg) 100%);
   font-family: 'Manrope', sans-serif;
   line-height: 1.7;
 }
@@ -71,7 +71,7 @@ a {
   top: 0;
   z-index: 20;
   backdrop-filter: blur(12px);
-  background: rgba(255, 250, 243, 0.84);
+  background: rgba(237, 225, 207, 0.9);
   border-bottom: 1px solid rgba(112, 88, 58, 0.12);
 }
 
@@ -99,13 +99,25 @@ a {
 }
 
 .nav a {
+  display: inline-block;
   color: var(--muted);
   font-size: 0.96rem;
-  transition: color 0.2s ease;
+  transform-origin: center;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .nav a:hover {
   color: var(--primary-dark);
+  transform: scale(1.16);
+}
+
+.nav a:focus-visible {
+  color: var(--primary-dark);
+  outline: 2px solid rgba(131, 81, 44, 0.35);
+  outline-offset: 5px;
+  transform: scale(1.16);
 }
 
 .section {
@@ -279,6 +291,97 @@ a {
   gap: 22px;
 }
 
+.carousel {
+  display: grid;
+  gap: 20px;
+  justify-items: center;
+}
+
+.carousel-track {
+  width: min(100%, 620px);
+  min-height: 560px;
+  display: grid;
+  align-items: stretch;
+}
+
+.carousel-card {
+  grid-area: 1 / 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.carousel-card.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.carousel-card.is-active:hover,
+.carousel-card.is-active:focus-visible {
+  transform: scale(1.04);
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.carousel-button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(131, 81, 44, 0.28);
+  border-radius: 999px;
+  background: rgba(248, 241, 231, 0.9);
+  color: var(--primary-dark);
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 800;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.carousel-button:hover,
+.carousel-button:focus-visible {
+  background: var(--surface-strong);
+  border-color: rgba(131, 81, 44, 0.48);
+  outline: none;
+  transform: scale(1.12);
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(95, 107, 122, 0.36);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    width 0.2s ease;
+}
+
+.carousel-dot.is-active {
+  width: 28px;
+  background: var(--primary);
+}
+
 .content-card {
   border: 1px solid var(--border);
   border-radius: 24px;
@@ -304,20 +407,30 @@ a {
 }
 
 .interactive-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 60px rgba(31, 41, 51, 0.14);
-  border-color: rgba(131, 81, 44, 0.28);
+  transform: scale(1.04);
+  box-shadow: 0 26px 64px rgba(31, 41, 51, 0.22);
+  border-color: rgba(131, 81, 44, 0.42);
 }
 
 .interactive-card:focus-visible {
   outline: 3px solid rgba(131, 81, 44, 0.35);
   outline-offset: 4px;
+  transform: scale(1.04);
 }
 
 .content-card img {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   background: #eee3d1;
+  transition:
+    filter 0.28s ease,
+    transform 0.28s ease;
+}
+
+.interactive-card:hover img,
+.interactive-card:focus-visible img {
+  filter: saturate(1.05) contrast(1.04);
+  transform: scale(1.06);
 }
 
 .card-body {

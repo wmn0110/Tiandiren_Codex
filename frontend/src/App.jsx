@@ -1,6 +1,86 @@
 import { useEffect, useState } from 'react';
 import { aboutText, experiences, personalInfo, products } from './data/siteData';
 
+function Carousel({ items, type, onSelect }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const timerId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % items.length);
+    }, 4200);
+
+    return () => window.clearInterval(timerId);
+  }, [items.length]);
+
+  const goTo = (index) => {
+    setActiveIndex((index + items.length) % items.length);
+  };
+
+  return (
+    <div className="carousel">
+      <div className="carousel-track">
+        {items.map((item, index) => {
+          const isProduct = type === 'product';
+          const title = isProduct ? item.name : item.title;
+          const intro = item.intro;
+
+          return (
+            <button
+              key={item.id}
+              type="button"
+              className={`content-card interactive-card carousel-card ${
+                index === activeIndex ? 'is-active' : ''
+              }`}
+              aria-hidden={index === activeIndex ? 'false' : 'true'}
+              tabIndex={index === activeIndex ? 0 : -1}
+              onClick={() => onSelect({ type, ...item })}
+            >
+              <img src={item.image} alt={title} />
+              <div className="card-body">
+                <div className="card-kicker">{isProduct ? '商品' : '經歷'}</div>
+                <h3>{title}</h3>
+                <p>{intro}</p>
+                <span className="card-link">點擊查看詳細資訊</span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="carousel-controls" aria-label={type === 'product' ? '商品輪播控制' : '經歷輪播控制'}>
+        <button
+          type="button"
+          className="carousel-button"
+          onClick={() => goTo(activeIndex - 1)}
+          aria-label="上一頁"
+        >
+          ‹
+        </button>
+        <div className="carousel-dots">
+          {items.map((item, index) => (
+            <button
+              key={item.id}
+              type="button"
+              className={`carousel-dot ${index === activeIndex ? 'is-active' : ''}`}
+              onClick={() => goTo(index)}
+              aria-label={`切換到第 ${index + 1} 張`}
+              aria-current={index === activeIndex ? 'true' : 'false'}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          className="carousel-button"
+          onClick={() => goTo(activeIndex + 1)}
+          aria-label="下一頁"
+        >
+          ›
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -104,24 +184,7 @@ function App() {
               <h2>商品展示</h2>
             </div>
 
-            <div className="card-grid">
-              {products.map((product) => (
-                <button
-                  key={product.id}
-                  type="button"
-                  className="content-card interactive-card"
-                  onClick={() => setSelectedItem({ type: 'product', ...product })}
-                >
-                  <img src={product.image} alt={product.name} />
-                  <div className="card-body">
-                    <div className="card-kicker">商品</div>
-                    <h3>{product.name}</h3>
-                    <p>{product.intro}</p>
-                    <span className="card-link">點擊查看詳細資訊</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+            <Carousel items={products} type="product" onSelect={setSelectedItem} />
           </div>
         </section>
 
@@ -132,24 +195,7 @@ function App() {
               <h2>經歷展示</h2>
             </div>
 
-            <div className="card-grid">
-              {experiences.map((experience) => (
-                <button
-                  key={experience.id}
-                  type="button"
-                  className="content-card interactive-card experience-card"
-                  onClick={() => setSelectedItem({ type: 'experience', ...experience })}
-                >
-                  <img src={experience.image} alt={experience.title} />
-                  <div className="card-body">
-                    <div className="card-kicker">經歷</div>
-                    <h3>{experience.title}</h3>
-                    <p>{experience.intro}</p>
-                    <span className="card-link">點擊查看詳細資訊</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+            <Carousel items={experiences} type="experience" onSelect={setSelectedItem} />
           </div>
         </section>
 

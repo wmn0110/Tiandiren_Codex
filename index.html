@@ -6,16 +6,16 @@
   <title>自我學習紀錄</title>
   <style>
     :root {
-      --bg: #f6f1e8;
-      --bg-soft: #fffaf3;
-      --surface: #ffffff;
-      --surface-strong: #f3e7d3;
+      --bg: #ded3c2;
+      --bg-soft: #ede1cf;
+      --surface: #f8f1e7;
+      --surface-strong: #d7c6ae;
       --text: #1f2933;
       --muted: #5f6b7a;
       --primary: #8b5e34;
       --primary-dark: #6f4525;
-      --border: #e6dccd;
-      --shadow: 0 12px 30px rgba(31, 41, 51, 0.08);
+      --border: #c9b89e;
+      --shadow: 0 16px 36px rgba(31, 41, 51, 0.14);
       --radius: 20px;
       --max-width: 1120px;
     }
@@ -32,7 +32,7 @@
       margin: 0;
       font-family: Arial, "Noto Sans TC", sans-serif;
       color: var(--text);
-      background: linear-gradient(180deg, #fffdf8 0%, var(--bg) 100%);
+      background: linear-gradient(180deg, #eee4d5 0%, var(--bg) 100%);
       line-height: 1.7;
     }
 
@@ -56,7 +56,7 @@
       top: 0;
       z-index: 1000;
       backdrop-filter: blur(10px);
-      background: rgba(255, 250, 243, 0.88);
+      background: rgba(237, 225, 207, 0.9);
       border-bottom: 1px solid rgba(230, 220, 205, 0.8);
     }
 
@@ -85,14 +85,24 @@
     }
 
     .nav a {
+      display: inline-block;
       font-size: 0.95rem;
       color: var(--muted);
       padding: 6px 0;
-      transition: color 0.2s ease;
+      transform-origin: center;
+      transition: color 0.2s ease, transform 0.2s ease;
     }
 
     .nav a:hover {
       color: var(--primary-dark);
+      transform: scale(1.16);
+    }
+
+    .nav a:focus-visible {
+      color: var(--primary-dark);
+      outline: 2px solid rgba(139, 94, 52, 0.35);
+      outline-offset: 5px;
+      transform: scale(1.16);
     }
 
     .hero {
@@ -172,7 +182,7 @@
     }
 
     .hero-card {
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(248, 241, 231, 0.82);
       border: 1px solid var(--border);
       border-radius: 28px;
       padding: 26px;
@@ -229,6 +239,83 @@
       gap: 22px;
     }
 
+    .carousel {
+      display: grid;
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .carousel-track {
+      width: min(100%, 620px);
+      min-height: 560px;
+      display: grid;
+      align-items: stretch;
+    }
+
+    .carousel-track .card {
+      grid-area: 1 / 1;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .carousel-track .card.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .carousel-button {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(139, 94, 52, 0.28);
+      border-radius: 999px;
+      background: rgba(248, 241, 231, 0.9);
+      color: var(--primary-dark);
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .carousel-button:hover,
+    .carousel-button:focus-visible {
+      background: var(--surface);
+      border-color: rgba(139, 94, 52, 0.48);
+      outline: none;
+      transform: scale(1.12);
+    }
+
+    .carousel-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(95, 107, 122, 0.36);
+      cursor: pointer;
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+
+    .carousel-dot.is-active {
+      width: 28px;
+      background: var(--primary);
+    }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -237,12 +324,34 @@
       box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
+      transform-origin: center;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+      will-change: transform;
+    }
+
+    .card:hover,
+    .card:focus-within {
+      border-color: rgba(139, 94, 52, 0.42);
+      box-shadow: 0 24px 58px rgba(31, 41, 51, 0.2);
+      transform: scale(1.04);
+    }
+
+    .carousel-track .card.is-active:hover,
+    .carousel-track .card.is-active:focus-within {
+      transform: scale(1.04);
     }
 
     .card img {
       aspect-ratio: 4 / 3;
       object-fit: cover;
       background: #efe6d8;
+      transition: transform 0.28s ease, filter 0.28s ease;
+    }
+
+    .card:hover img,
+    .card:focus-within img {
+      filter: saturate(1.05) contrast(1.04);
+      transform: scale(1.06);
     }
 
     .card-body {
@@ -407,8 +516,9 @@
           <h2>商品展示</h2>
           <p>先放 3 個商品卡片，之後可以再替換成實際圖片、名稱與介紹。</p>
         </div>
-        <div class="card-grid">
-          <article class="card">
+        <div class="carousel" data-carousel>
+          <div class="carousel-track">
+          <article class="card is-active">
             <img src="商品圖片/product-1.jpg" alt="商品 1 圖片" />
             <div class="card-body">
               <h3>高效能桌機組合</h3>
@@ -434,6 +544,12 @@
               <a class="btn btn-primary" href="#contact">看更多</a>
             </div>
           </article>
+          </div>
+          <div class="carousel-controls" aria-label="商品展示輪播控制">
+            <button class="carousel-button" type="button" data-carousel-prev aria-label="上一個商品">‹</button>
+            <div class="carousel-dots" data-carousel-dots></div>
+            <button class="carousel-button" type="button" data-carousel-next aria-label="下一個商品">›</button>
+          </div>
         </div>
       </div>
     </section>
@@ -444,8 +560,9 @@
           <h2>經歷展示</h2>
           <p>先放 3 個經歷卡片，方便之後整理作品集、專案紀錄或學習成果。</p>
         </div>
-        <div class="card-grid">
-          <article class="card">
+        <div class="carousel" data-carousel>
+          <div class="carousel-track">
+          <article class="card is-active">
             <img src="經歷圖片/experience-1.jpg" alt="經歷 1 圖片" />
             <div class="card-body">
               <h3>學生階段的基礎累積</h3>
@@ -471,6 +588,12 @@
               <a class="btn btn-secondary" href="#contact">看更多</a>
             </div>
           </article>
+          </div>
+          <div class="carousel-controls" aria-label="經歷展示輪播控制">
+            <button class="carousel-button" type="button" data-carousel-prev aria-label="上一個經歷">‹</button>
+            <div class="carousel-dots" data-carousel-dots></div>
+            <button class="carousel-button" type="button" data-carousel-next aria-label="下一個經歷">›</button>
+          </div>
         </div>
       </div>
     </section>
@@ -502,5 +625,69 @@
       <p>© 2026 自我學習紀錄. All rights reserved.</p>
     </div>
   </footer>
+  <script>
+    document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+      const cards = Array.from(carousel.querySelectorAll('.card'));
+      const prevButton = carousel.querySelector('[data-carousel-prev]');
+      const nextButton = carousel.querySelector('[data-carousel-next]');
+      const dotsContainer = carousel.querySelector('[data-carousel-dots]');
+      let activeIndex = 0;
+      let timerId;
+
+      const dots = cards.map((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot';
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `切換到第 ${index + 1} 張`);
+        dot.addEventListener('click', () => {
+          showCard(index);
+          restartTimer();
+        });
+        dotsContainer.appendChild(dot);
+        return dot;
+      });
+
+      function showCard(index) {
+        activeIndex = (index + cards.length) % cards.length;
+        cards.forEach((card, cardIndex) => {
+          const isActive = cardIndex === activeIndex;
+          card.classList.toggle('is-active', isActive);
+          card.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+          card.querySelectorAll('a, button').forEach((element) => {
+            element.tabIndex = isActive ? 0 : -1;
+          });
+        });
+        dots.forEach((dot, dotIndex) => {
+          dot.classList.toggle('is-active', dotIndex === activeIndex);
+          dot.setAttribute('aria-current', dotIndex === activeIndex ? 'true' : 'false');
+        });
+      }
+
+      function nextCard() {
+        showCard(activeIndex + 1);
+      }
+
+      function restartTimer() {
+        window.clearInterval(timerId);
+        timerId = window.setInterval(nextCard, 4200);
+      }
+
+      prevButton.addEventListener('click', () => {
+        showCard(activeIndex - 1);
+        restartTimer();
+      });
+
+      nextButton.addEventListener('click', () => {
+        nextCard();
+        restartTimer();
+      });
+
+      carousel.addEventListener('mouseenter', () => window.clearInterval(timerId));
+      carousel.addEventListener('mouseleave', restartTimer);
+
+      showCard(0);
+      restartTimer();
+    });
+  </script>
 </body>
 </html>

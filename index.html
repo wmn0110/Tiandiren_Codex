@@ -316,6 +316,114 @@
       background: var(--primary);
     }
 
+    .section-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .add-button {
+      border: 1px solid rgba(139, 94, 52, 0.3);
+      border-radius: 999px;
+      background: var(--primary);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      padding: 12px 20px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .add-button:hover,
+    .add-button:focus-visible {
+      background: var(--primary-dark);
+      outline: none;
+      transform: translateY(-2px);
+    }
+
+    .entry-form {
+      background: rgba(248, 241, 231, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 18px;
+      margin: 0 0 26px;
+      padding: 22px;
+    }
+
+    .entry-form[hidden] {
+      display: none;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid rgba(139, 94, 52, 0.24);
+      border-radius: 12px;
+      background: #fffaf3;
+      color: var(--text);
+      font: inherit;
+      padding: 11px 13px;
+    }
+
+    .form-field textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .form-hint {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin: 0;
+    }
+
+    .form-error {
+      color: #9f2d20;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .card-meta {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .card-meta strong {
+      color: var(--primary-dark);
+    }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -436,6 +544,19 @@
         width: 100%;
       }
 
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        justify-content: stretch;
+      }
+
+      .form-actions .btn,
+      .form-actions .add-button {
+        width: 100%;
+      }
+
       .contact-item strong {
         display: block;
         margin-bottom: 4px;
@@ -516,6 +637,44 @@
           <h2>商品展示</h2>
           <p>先放 3 個商品卡片，之後可以再替換成實際圖片、名稱與介紹。</p>
         </div>
+        <div class="section-tools">
+          <p class="form-hint">新增的商品會先顯示在目前畫面中，重新整理後會消失。</p>
+          <button class="add-button" type="button" data-open-form="product-form">新增商品</button>
+        </div>
+        <form class="entry-form" id="product-form" data-entry-form="product" hidden>
+          <p class="form-hint">圖片檔名請填像是 product-4.jpg，圖片要放在「商品圖片」資料夾。</p>
+          <p class="form-error" data-form-error></p>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="product-name">商品名稱</label>
+              <input id="product-name" name="name" type="text" placeholder="例如：入門學習電腦組合" />
+            </div>
+            <div class="form-field">
+              <label for="product-image">商品圖片檔名</label>
+              <input id="product-image" name="image" type="text" placeholder="例如：product-4.jpg" />
+            </div>
+            <div class="form-field full">
+              <label for="product-intro">商品簡介</label>
+              <textarea id="product-intro" name="intro" placeholder="用一兩句話介紹商品重點"></textarea>
+            </div>
+            <div class="form-field full">
+              <label for="product-detail">商品詳細介紹</label>
+              <textarea id="product-detail" name="detail" placeholder="補充商品特色、用途或服務內容"></textarea>
+            </div>
+            <div class="form-field">
+              <label for="product-audience">適合對象</label>
+              <input id="product-audience" name="audience" type="text" placeholder="例如：學生、工程師、創作者" />
+            </div>
+            <div class="form-field">
+              <label for="product-pricing">價格或合作方式</label>
+              <input id="product-pricing" name="pricing" type="text" placeholder="例如：可洽詢報價" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-secondary" type="button" data-cancel-form>取消</button>
+            <button class="btn btn-primary" type="submit">儲存商品</button>
+          </div>
+        </form>
         <div class="carousel" data-carousel>
           <div class="carousel-track">
           <article class="card is-active">
@@ -560,6 +719,44 @@
           <h2>經歷展示</h2>
           <p>先放 3 個經歷卡片，方便之後整理作品集、專案紀錄或學習成果。</p>
         </div>
+        <div class="section-tools">
+          <p class="form-hint">新增的經歷會先顯示在目前畫面中，重新整理後會消失。</p>
+          <button class="add-button" type="button" data-open-form="experience-form">新增經歷</button>
+        </div>
+        <form class="entry-form" id="experience-form" data-entry-form="experience" hidden>
+          <p class="form-hint">圖片檔名請填像是 experience-4.jpg，圖片要放在「經歷圖片」資料夾。</p>
+          <p class="form-error" data-form-error></p>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="experience-title">經歷標題</label>
+              <input id="experience-title" name="title" type="text" placeholder="例如：第一次完成作品集" />
+            </div>
+            <div class="form-field">
+              <label for="experience-image">經歷圖片檔名</label>
+              <input id="experience-image" name="image" type="text" placeholder="例如：experience-4.jpg" />
+            </div>
+            <div class="form-field full">
+              <label for="experience-intro">經歷簡介</label>
+              <textarea id="experience-intro" name="intro" placeholder="用一兩句話介紹這段經歷"></textarea>
+            </div>
+            <div class="form-field full">
+              <label for="experience-story">詳細故事</label>
+              <textarea id="experience-story" name="story" placeholder="補充背景、過程或學到的事"></textarea>
+            </div>
+            <div class="form-field">
+              <label for="experience-date">日期或年份</label>
+              <input id="experience-date" name="date" type="text" placeholder="例如：2025" />
+            </div>
+            <div class="form-field">
+              <label for="experience-result">相關成果</label>
+              <input id="experience-result" name="result" type="text" placeholder="例如：完成一個可展示作品" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-secondary" type="button" data-cancel-form>取消</button>
+            <button class="btn btn-primary" type="submit">儲存經歷</button>
+          </div>
+        </form>
         <div class="carousel" data-carousel>
           <div class="carousel-track">
           <article class="card is-active">
@@ -626,28 +823,39 @@
     </div>
   </footer>
   <script>
-    document.querySelectorAll('[data-carousel]').forEach((carousel) => {
-      const cards = Array.from(carousel.querySelectorAll('.card'));
+    function setupCarousel(carousel) {
       const prevButton = carousel.querySelector('[data-carousel-prev]');
       const nextButton = carousel.querySelector('[data-carousel-next]');
       const dotsContainer = carousel.querySelector('[data-carousel-dots]');
       let activeIndex = 0;
       let timerId;
+      let cards = [];
+      let dots = [];
 
-      const dots = cards.map((_, index) => {
-        const dot = document.createElement('button');
-        dot.className = 'carousel-dot';
-        dot.type = 'button';
-        dot.setAttribute('aria-label', `切換到第 ${index + 1} 張`);
-        dot.addEventListener('click', () => {
-          showCard(index);
-          restartTimer();
+      function buildDots() {
+        dotsContainer.innerHTML = '';
+        dots = cards.map((_, index) => {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot';
+          dot.type = 'button';
+          dot.setAttribute('aria-label', `切換到第 ${index + 1} 張`);
+          dot.addEventListener('click', () => {
+            showCard(index);
+            restartTimer();
+          });
+          dotsContainer.appendChild(dot);
+          return dot;
         });
-        dotsContainer.appendChild(dot);
-        return dot;
-      });
+      }
+
+      function refresh(newActiveIndex = activeIndex) {
+        cards = Array.from(carousel.querySelectorAll('.card'));
+        buildDots();
+        showCard(newActiveIndex);
+      }
 
       function showCard(index) {
+        if (cards.length === 0) return;
         activeIndex = (index + cards.length) % cards.length;
         cards.forEach((card, cardIndex) => {
           const isActive = cardIndex === activeIndex;
@@ -685,9 +893,147 @@
       carousel.addEventListener('mouseenter', () => window.clearInterval(timerId));
       carousel.addEventListener('mouseleave', restartTimer);
 
-      showCard(0);
+      refresh(0);
       restartTimer();
+      carousel.carouselApi = { refresh, showCard };
+    }
+
+    function normalizeImagePath(fileName, folderName, fallbackName) {
+      const value = fileName.trim();
+      if (!value) return `${folderName}/${fallbackName}`;
+      if (value.includes('/') || value.includes('\\')) return value;
+      return `${folderName}/${value}`;
+    }
+
+    function createMeta(label, value) {
+      const item = document.createElement('div');
+      const strong = document.createElement('strong');
+      strong.textContent = `${label}：`;
+      item.append(strong, document.createTextNode(value || '尚未填寫'));
+      return item;
+    }
+
+    function createCard({ title, image, intro, primaryText, metaItems }) {
+      const card = document.createElement('article');
+      card.className = 'card';
+
+      const img = document.createElement('img');
+      img.src = image;
+      img.alt = `${title} 圖片`;
+
+      const body = document.createElement('div');
+      body.className = 'card-body';
+
+      const heading = document.createElement('h3');
+      heading.textContent = title;
+
+      const introText = document.createElement('p');
+      introText.textContent = intro;
+
+      const meta = document.createElement('div');
+      meta.className = 'card-meta';
+      metaItems.forEach((item) => meta.appendChild(createMeta(item.label, item.value)));
+
+      const link = document.createElement('a');
+      link.className = `btn ${primaryText === '看商品' ? 'btn-primary' : 'btn-secondary'}`;
+      link.href = '#contact';
+      link.textContent = primaryText;
+
+      body.append(heading, introText, meta, link);
+      card.append(img, body);
+      return card;
+    }
+
+    function setFormVisible(form, isVisible) {
+      form.hidden = !isVisible;
+      form.querySelector('[data-form-error]').textContent = '';
+      if (isVisible) {
+        const firstInput = form.querySelector('input, textarea');
+        firstInput?.focus();
+      }
+    }
+
+    function setupEntryForm(form) {
+      const type = form.dataset.entryForm;
+      const carousel = form.parentElement.querySelector('[data-carousel]');
+      const track = carousel.querySelector('.carousel-track');
+      const error = form.querySelector('[data-form-error]');
+      const cancelButton = form.querySelector('[data-cancel-form]');
+
+      cancelButton.addEventListener('click', () => {
+        form.reset();
+        setFormVisible(form, false);
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const intro = formData.get('intro').trim();
+
+        if (type === 'product') {
+          const name = formData.get('name').trim();
+          if (!name) {
+            error.textContent = '請填寫商品名稱。';
+            return;
+          }
+          if (!intro) {
+            error.textContent = '請填寫商品簡介。';
+            return;
+          }
+
+          const card = createCard({
+            title: name,
+            image: normalizeImagePath(formData.get('image'), '商品圖片', 'product-1.jpg'),
+            intro,
+            primaryText: '看商品',
+            metaItems: [
+              { label: '適合對象', value: formData.get('audience').trim() },
+              { label: '合作方式', value: formData.get('pricing').trim() },
+              { label: '詳細介紹', value: formData.get('detail').trim() },
+            ],
+          });
+          track.appendChild(card);
+        } else {
+          const title = formData.get('title').trim();
+          if (!title) {
+            error.textContent = '請填寫經歷標題。';
+            return;
+          }
+          if (!intro) {
+            error.textContent = '請填寫經歷簡介。';
+            return;
+          }
+
+          const card = createCard({
+            title,
+            image: normalizeImagePath(formData.get('image'), '經歷圖片', 'experience-1.jpg'),
+            intro,
+            primaryText: '看經歷',
+            metaItems: [
+              { label: '日期或年份', value: formData.get('date').trim() },
+              { label: '相關成果', value: formData.get('result').trim() },
+              { label: '詳細故事', value: formData.get('story').trim() },
+            ],
+          });
+          track.appendChild(card);
+        }
+
+        carousel.carouselApi.refresh(track.querySelectorAll('.card').length - 1);
+        form.reset();
+        setFormVisible(form, false);
+      });
+    }
+
+    document.querySelectorAll('[data-carousel]').forEach(setupCarousel);
+
+    document.querySelectorAll('[data-open-form]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const form = document.getElementById(button.dataset.openForm);
+        setFormVisible(form, form.hidden);
+      });
     });
+
+    document.querySelectorAll('[data-entry-form]').forEach(setupEntryForm);
   </script>
 </body>
 </html>

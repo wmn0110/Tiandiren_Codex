@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Serif+TC:wght@500;700;800&display=swap');
 
 :root {
-  --bg: #ded3c2;
-  --bg-soft: #ede1cf;
-  --surface: rgba(248, 241, 231, 0.92);
-  --surface-strong: #f8f1e7;
-  --text: #1f2933;
-  --muted: #5f6b7a;
-  --primary: #83512c;
-  --primary-dark: #653b1c;
-  --accent: #d89c62;
-  --border: rgba(112, 88, 58, 0.22);
-  --shadow: 0 18px 45px rgba(31, 41, 51, 0.16);
+  --bg: #cbc0b2;
+  --bg-soft: #d8ccbc;
+  --surface: rgba(245, 238, 229, 0.94);
+  --surface-strong: #f3eadf;
+  --text: #222831;
+  --muted: #5b6570;
+  --primary: #734722;
+  --primary-dark: #52301a;
+  --accent: #c98c53;
+  --border: rgba(93, 69, 44, 0.22);
+  --shadow: 0 18px 45px rgba(22, 30, 38, 0.18);
   --radius-lg: 28px;
   --radius-md: 20px;
   --max-width: 1160px;
@@ -29,9 +29,9 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    radial-gradient(circle at top right, rgba(216, 156, 98, 0.14), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(88, 68, 47, 0.16), transparent 28%),
-    linear-gradient(180deg, #eee4d5 0%, var(--bg) 100%);
+    radial-gradient(circle at top right, rgba(201, 140, 83, 0.14), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(88, 68, 47, 0.18), transparent 28%),
+    linear-gradient(180deg, #e7ddcf 0%, var(--bg) 100%);
   font-family: 'Manrope', sans-serif;
   line-height: 1.7;
 }
@@ -71,7 +71,7 @@ a {
   top: 0;
   z-index: 20;
   backdrop-filter: blur(12px);
-  background: rgba(237, 225, 207, 0.9);
+  background: rgba(214, 202, 186, 0.92);
   border-bottom: 1px solid rgba(112, 88, 58, 0.12);
 }
 
@@ -210,6 +210,15 @@ a {
 
 .button.secondary:hover {
   background: rgba(131, 81, 44, 0.08);
+}
+
+.button.danger {
+  background: #8f3a2f;
+  color: #fff;
+}
+
+.button.danger:hover {
+  background: #6f2b22;
 }
 
 .hero-panel {
@@ -380,6 +389,120 @@ a {
 .carousel-dot.is-active {
   width: 28px;
   background: var(--primary);
+}
+
+.section-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.notice-banner {
+  margin-top: 18px;
+  padding: 14px 18px;
+  border: 1px solid rgba(131, 81, 44, 0.2);
+  border-radius: 16px;
+  background: rgba(248, 241, 231, 0.9);
+  color: var(--primary-dark);
+  box-shadow: var(--shadow);
+}
+
+.add-button {
+  border: 1px solid rgba(131, 81, 44, 0.3);
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  min-height: 46px;
+  padding: 0 20px;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.add-button:hover,
+.add-button:focus-visible {
+  background: var(--primary-dark);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.entry-form {
+  background: rgba(248, 241, 231, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 18px;
+  margin: 0 0 26px;
+  padding: 22px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-field {
+  display: grid;
+  gap: 7px;
+}
+
+.form-field.full {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  border: 1px solid rgba(131, 81, 44, 0.24);
+  border-radius: 12px;
+  background: #fffaf3;
+  color: var(--text);
+  font: inherit;
+  padding: 11px 13px;
+}
+
+.form-field textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.form-hint {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.form-error {
+  color: #9f2d20;
+  font-weight: 700;
+  margin: 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 26px;
 }
 
 .content-card {
@@ -616,6 +739,19 @@ a {
     gap: 4px;
   }
 
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .form-actions .button,
+  .form-actions .add-button {
+    width: 100%;
+  }
+
   .about-card,
   .contact-card,
   .modal-content {
@@ -624,5 +760,13 @@ a {
 
   .detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .modal-actions {
+    justify-content: stretch;
+  }
+
+  .modal-actions .button {
+    width: 100%;
   }
 }

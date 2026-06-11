@@ -1,0 +1,8 @@
+{
+  "name": "tiandiren-codex",
+  "private": true,
+  "scripts": {
+    "install:frontend": "npm install --prefix frontend",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend"
+  }
+}

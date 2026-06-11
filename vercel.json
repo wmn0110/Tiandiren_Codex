@@ -6,11 +6,6 @@
       "entrypoint": "frontend",
       "routePrefix": "/",
       "framework": "vite"
-    },
-    "backend": {
-      "entrypoint": "backend/app.py",
-      "routePrefix": "/api",
-      "framework": "flask"
     }
   }
 }

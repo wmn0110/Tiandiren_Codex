@@ -1,0 +1,506 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>自我學習紀錄</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --bg-soft: #fffaf3;
+      --surface: #ffffff;
+      --surface-strong: #f3e7d3;
+      --text: #1f2933;
+      --muted: #5f6b7a;
+      --primary: #8b5e34;
+      --primary-dark: #6f4525;
+      --border: #e6dccd;
+      --shadow: 0 12px 30px rgba(31, 41, 51, 0.08);
+      --radius: 20px;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans TC", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fffdf8 0%, var(--bg) 100%);
+      line-height: 1.7;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 250, 243, 0.88);
+      border-bottom: 1px solid rgba(230, 220, 205, 0.8);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0;
+    }
+
+    .brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--primary-dark);
+    }
+
+    .nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      font-size: 0.95rem;
+      color: var(--muted);
+      padding: 6px 0;
+      transition: color 0.2s ease;
+    }
+
+    .nav a:hover {
+      color: var(--primary-dark);
+    }
+
+    .hero {
+      padding: 88px 0 72px;
+      background:
+        radial-gradient(circle at top right, rgba(139, 94, 52, 0.15), transparent 32%),
+        radial-gradient(circle at bottom left, rgba(243, 231, 211, 0.9), transparent 30%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      margin: 0 0 16px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .hero p {
+      max-width: 620px;
+      color: var(--muted);
+      margin: 0 0 28px;
+      font-size: 1.02rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary-dark);
+      border-color: rgba(139, 94, 52, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(139, 94, 52, 0.08);
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card .note {
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+
+    .hero-card .stats {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stat {
+      background: var(--bg-soft);
+      border-radius: 18px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-title {
+      margin-bottom: 28px;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+      margin: 0 0 8px;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    .about-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card img {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #efe6d8;
+    }
+
+    .card-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .card .btn {
+      align-self: flex-start;
+      min-width: 120px;
+      padding: 11px 18px;
+      font-size: 0.95rem;
+    }
+
+    .contact-box {
+      background: linear-gradient(135deg, #fff 0%, #f6ead8 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+    }
+
+    .contact-item strong {
+      display: inline-block;
+      min-width: 110px;
+      color: var(--primary-dark);
+    }
+
+    .site-footer {
+      padding: 28px 0 40px;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid rgba(230, 220, 205, 0.8);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 64px 0 56px;
+      }
+
+      .section {
+        padding: 56px 0;
+      }
+
+      .nav ul {
+        gap: 14px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .contact-item strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">自我學習紀錄</a>
+      <nav class="nav" aria-label="主導覽">
+        <ul>
+          <li><a href="#about">關於我</a></li>
+          <li><a href="#products">商品展示</a></li>
+          <li><a href="#experience">經歷展示</a></li>
+          <li><a href="#contact">聯絡我</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="subtitle">梁晏誠 / 工程師</div>
+          <h1>一個正在跨領域學習的工程師</h1>
+          <p>
+            這裡記錄我的學習、作品與經歷，也整理我目前提供的商品與服務。
+            希望透過這個網站，讓你更快速認識我、理解我的風格，以及我能帶來的價值。
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#products">查看商品</a>
+            <a class="btn btn-secondary" href="#experience">查看經歷</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="摘要資訊">
+          <p class="note">網站摘要</p>
+          <div class="stats">
+            <div class="stat">
+              <strong>網站名稱</strong>
+              <div>自我學習紀錄</div>
+            </div>
+            <div class="stat">
+              <strong>姓名</strong>
+              <div>梁晏誠</div>
+            </div>
+            <div class="stat">
+              <strong>定位</strong>
+              <div>持續學習、持續實作、持續成長</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-title">
+          <h2>關於我</h2>
+          <p>先用一段自然、專業的文字，讓訪客快速理解你的背景與特色。</p>
+        </div>
+        <div class="about-box">
+          <p>
+            我是一位正在跨領域學習的工程師，平常喜歡把技術、思考與實作結合起來，逐步累積自己的能力。
+            我重視學習的深度，也在意內容是否能真正解決問題，因此不論是作品、商品或經歷，我都希望呈現出清楚、實用且值得信任的樣貌。
+            這個網站會持續更新，記錄我在不同階段的探索與成果。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-title">
+          <h2>商品展示</h2>
+          <p>先放 3 個商品卡片，之後可以再替換成實際圖片、名稱與介紹。</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <img src="商品圖片/product-1.jpg" alt="商品 1 圖片" />
+            <div class="card-body">
+              <h3>高效能桌機組合</h3>
+              <p>適合日常工作、內容整理與多工處理的實用配置，兼顧穩定性與擴充彈性。</p>
+              <a class="btn btn-primary" href="#contact">看更多</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="商品圖片/product-2.jpg" alt="商品 2 圖片" />
+            <div class="card-body">
+              <h3>學習型工作站</h3>
+              <p>為需要長時間閱讀、開發與測試的人設計，強調流暢體驗與舒適使用。</p>
+              <a class="btn btn-primary" href="#contact">看更多</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="商品圖片/product-3.jpg" alt="商品 3 圖片" />
+            <div class="card-body">
+              <h3>創作與開發配置</h3>
+              <p>面向跨領域創作與工程應用，提供更好的效能表現與工作效率。</p>
+              <a class="btn btn-primary" href="#contact">看更多</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="section-title">
+          <h2>經歷展示</h2>
+          <p>先放 3 個經歷卡片，方便之後整理作品集、專案紀錄或學習成果。</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <img src="經歷圖片/experience-1.jpg" alt="經歷 1 圖片" />
+            <div class="card-body">
+              <h3>學生階段的基礎累積</h3>
+              <p>從課堂學習、課後練習到專題實作，逐步建立程式思維與自我學習的習慣。</p>
+              <a class="btn btn-secondary" href="#contact">看更多</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="經歷圖片/experience-2.jpg" alt="經歷 2 圖片" />
+            <div class="card-body">
+              <h3>上班族的專案協作</h3>
+              <p>在工作中參與需求溝通、任務執行與問題排查，累積更完整的實務經驗。</p>
+              <a class="btn btn-secondary" href="#contact">看更多</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="經歷圖片/experience-3.jpg" alt="經歷 3 圖片" />
+            <div class="card-body">
+              <h3>跨領域持續成長</h3>
+              <p>持續把學習內容轉化為實作成果，讓技術能力、溝通能力與觀察力一起成長。</p>
+              <a class="btn btn-secondary" href="#contact">看更多</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-title">
+          <h2>聯絡我</h2>
+          <p>如果你想進一步了解商品、合作方式，或想交流想法，都可以透過以下方式聯絡我。</p>
+        </div>
+        <div class="contact-box">
+          <div class="contact-list">
+            <div class="contact-item">
+              <strong>Email：</strong>
+              <a href="mailto:neteworld2024@gmail.com">neteworld2024@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <strong>社群或網站：</strong>
+              <a href="https://github.com/wmn0110" target="_blank" rel="noopener noreferrer">https://github.com/wmn0110</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 自我學習紀錄. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,8 +1,16 @@
 {
   "name": "tiandiren-codex",
   "private": true,
+  "type": "module",
   "scripts": {
-    "install:frontend": "npm install --prefix frontend",
-    "build": "npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "vite build frontend"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^5.4.10"
   }
 }
